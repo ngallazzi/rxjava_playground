@@ -34,8 +34,6 @@ import kotlin.math.roundToInt
  */
 
 fun main(args: Array<String>) {
-
-
     // just, simple observable creation
     val justObservable = Observable.just("A", "B", "C")
 
@@ -65,4 +63,14 @@ fun main(args: Array<String>) {
 
     subscriptions.add(disposable)
 
+    /* create operator */
+
+    Observable.create<String> { emitter ->
+        emitter.onNext("1")
+        emitter.onComplete()
+        emitter.onNext("2")
+    }.subscribeBy(
+        onNext = { println("emitted: $it") },
+        onComplete = { println("end of the stream") }
+    )
 }
