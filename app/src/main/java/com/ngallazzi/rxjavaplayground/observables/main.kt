@@ -34,11 +34,30 @@ import kotlin.math.roundToInt
  */
 
 fun main(args: Array<String>) {
-    val subscriptions = CompositeDisposable()
 
+
+    // just, simple observable creation
     val justObservable = Observable.just("A", "B", "C")
 
+    // from Iterable
     val fromIterableObservable = Observable.fromIterable(listOf("a", "b", "c"))
+
+    // empty observable
+    val emptyObservable = Observable.empty<Unit>()
+
+    /* subscribing */
+
+    justObservable.subscribe {
+        print(it)
+    }
+
+    fromIterableObservable.subscribeBy(
+        onNext = { println("element: $it") },
+        onComplete = { println("no more elements to emit") }
+    )
+
+    /* disposing */
+    val subscriptions = CompositeDisposable()
 
     val disposable = justObservable.subscribe {
         println(it)
