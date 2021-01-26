@@ -1,6 +1,7 @@
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import java.lang.RuntimeException
 import kotlin.math.roundToInt
 
 /*
@@ -67,10 +68,28 @@ fun main(args: Array<String>) {
 
     Observable.create<String> { emitter ->
         emitter.onNext("1")
-        emitter.onComplete()
         emitter.onNext("2")
+        emitter.onError(RuntimeException("An error occurred"))
+        emitter.onComplete()
     }.subscribeBy(
         onNext = { println("emitted: $it") },
         onComplete = { println("end of the stream") }
     )
+
+    /* Observable factory */
+
+    val disposables = CompositeDisposable()
+    // 1
+    var flip = false
+    // 2
+    val factory: Observable<Int> = Observable.defer {
+        // 3
+        flip = !flip
+        // 4
+        if (flip) {
+            Observable.just(1, 2, 3)
+        } else {
+            Observable.just(4, 5, 6)
+        }
+    }
 }
