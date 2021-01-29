@@ -3,6 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -24,7 +28,7 @@ android {
         }
         all {
             buildConfigField("String", "API_URL", "\"https://api.openweathermap.org/data/2.5/\"")
-            buildConfigField("String", "API_KEY", "\"2f80dbe43bf3d495f539780978b3d1ad\"")
+            buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
         }
     }
     compileOptions {
