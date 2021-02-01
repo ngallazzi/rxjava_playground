@@ -1,8 +1,8 @@
 package com.ngallazzi.rxjavaplayground.data.api
 
+import com.ngallazzi.rxjavaplayground.BuildConfig
 import com.ngallazzi.rxjavaplayground.domain.City
 import com.ngallazzi.rxjavaplayground.domain.Weather
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 class ApiResponseMapper {
@@ -13,6 +13,15 @@ class ApiResponseMapper {
     }
 
     fun fromWeatherApiResponseToCity(response: Single<WeatherApiResponse>): Single<City> {
-        return response.map { City(it.cityId, it.cityName, it.weather.first(), it.weatherInfo) }
+        return response.map {
+            val weather = it.weather.first()
+            weather.iconUrl = "${BuildConfig.IMAGES_URL}${weather.icon}@2x.png"
+
+            City(
+                it.cityId, it.cityName,
+                it.weather.first(),
+                it.weatherInfo
+            )
+        }
     }
 }

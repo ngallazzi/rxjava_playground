@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -28,6 +29,7 @@ android {
         }
         all {
             buildConfigField("String", "API_URL", "\"https://api.openweathermap.org/data/2.5/\"")
+            buildConfigField("String", "IMAGES_URL", "\"https://openweathermap.org/img/wn/\"")
             buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
         }
     }
@@ -37,6 +39,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -56,9 +62,14 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_moshi_converter_version"
     implementation "com.squareup.retrofit2:adapter-rxjava3:$rx_java_retrofit_adapter_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
     implementation "com.squareup.okhttp3:okhttp-bom:$okhttp_version"
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("com.squareup.okhttp3:okhttp")
+
+    // Image caching and loading
+    implementation("io.coil-kt:coil:$coil_version")
+
 
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"

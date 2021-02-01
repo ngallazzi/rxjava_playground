@@ -31,8 +31,8 @@ class NetworkModule {
         return Retrofit.Builder()
             .baseUrl(endpointURL)
             .client(httpClient)
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
     }
 

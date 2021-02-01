@@ -22,8 +22,14 @@ class ForecastViewModel(
         viewModelScope.launch {
             _dataLoading.postValue(true)
             getWeatherUseCase.invoke(city, apiKey).subscribe(
-                { response -> _city.postValue(response) },
-                { e -> _error.postValue(e.message) }
+                { response ->
+                    _city.postValue(response)
+                    _dataLoading.postValue(false)
+                },
+                { e ->
+                    _error.postValue(e.message)
+                    _dataLoading.postValue(false)
+                }
             )
         }
     }

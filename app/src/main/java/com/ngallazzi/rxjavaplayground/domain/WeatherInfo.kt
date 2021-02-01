@@ -1,3 +1,12 @@
 package com.ngallazzi.rxjavaplayground.domain
 
-data class WeatherInfo(val temp: Double, val minTemp: Double, val maxTemp: Double)
+import com.squareup.moshi.Json
+
+
+data class WeatherInfo(
+    val temp: Double,
+    @Json(name = "temp_min")
+    val minTemp: Double,
+    @Json(name = "temp_max")
+    val maxTemp: Double
+)
