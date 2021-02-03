@@ -1,0 +1,96 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.ngallazzi.rxjavaplayground"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        all {
+            buildConfigField("String", "API_URL", "\"https://api.openweathermap.org/data/2.5/\"")
+            buildConfigField("String", "IMAGES_URL", "\"https://openweathermap.org/img/wn/\"")
+            buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Desugaring
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugaring_version"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_moshi_converter_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$rx_java_retrofit_adapter_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
+    implementation "com.squareup.okhttp3:okhttp-bom:$okhttp_version"
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("com.squareup.okhttp3:okhttp")
+
+    // Image caching and loading
+    implementation("io.coil-kt:coil:$coil_version")
+
+    // Epoxy for recyclerview
+    implementation "com.airbnb.android:epoxy:$epoxy_version"
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+
+    implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rx_kotlin_version"
+
+}
