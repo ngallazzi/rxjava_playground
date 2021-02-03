@@ -1,4 +1,4 @@
-package com.ngallazzi.rxjavaplayground.domain
+package com.ngallazzi.rxjavaplayground.domain.entities
 
 import com.squareup.moshi.Json
 

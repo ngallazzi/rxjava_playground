@@ -1,6 +1,7 @@
 package com.ngallazzi.rxjavaplayground.data.api
 
-import com.ngallazzi.rxjavaplayground.domain.City
+import com.ngallazzi.rxjavaplayground.data.mappers.ApiResponseMapper
+import com.ngallazzi.rxjavaplayground.domain.entities.City
 import com.ngallazzi.rxjavaplayground.domain.common.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,7 +15,7 @@ class WeatherRemoteDataSourceCoroutines(
             try {
                 val response = service.getCityWeather(cityName, apiKey)
                 if (response.isSuccessful) {
-                    return@withContext Result.Success(mapper.fromWeatherApiResponseToCity(response.body()!!))
+                    return@withContext Result.Success(mapper.fromWeatherApiResponseToCityForecast(response.body()!!))
                 } else {
                     return@withContext Result.Error(Exception(response.message()))
                 }

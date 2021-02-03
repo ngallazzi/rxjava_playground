@@ -1,4 +1,4 @@
-package com.ngallazzi.rxjavaplayground.domain
+package com.ngallazzi.rxjavaplayground.domain.entities
 
 data class City(
     val id: Int,
