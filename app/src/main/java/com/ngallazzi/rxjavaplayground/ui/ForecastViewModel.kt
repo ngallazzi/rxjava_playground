@@ -51,19 +51,4 @@ class ForecastViewModel(
             )
         }
     }
-
-    class ForecastViewModelFactory(
-        private val getWeatherUseCase: GetWeatherUseCase,
-        private val getDailyForecastsUseCase: GetDailyForecastsUseCase
-    ) :
-        ViewModelProvider.NewInstanceFactory() {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return ForecastViewModel(
-                getWeatherUseCase,
-                getDailyForecastsUseCase
-            ) as T
-        }
-    }
 }

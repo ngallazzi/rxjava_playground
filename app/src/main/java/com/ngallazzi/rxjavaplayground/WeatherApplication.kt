@@ -1,18 +1,20 @@
 package com.ngallazzi.rxjavaplayground
 
 import android.app.Application
-import com.ngallazzi.rxjavaplayground.di.ServiceLocator
-import com.ngallazzi.rxjavaplayground.domain.repositories.WeatherRepository
-import com.ngallazzi.rxjavaplayground.domain.usecases.GetDailyForecastsUseCase
-import com.ngallazzi.rxjavaplayground.domain.usecases.GetWeatherUseCase
+import com.ngallazzi.rxjavaplayground.di.appModule
+import com.ngallazzi.rxjavaplayground.di.viewModelsModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class WeatherApplication : Application() {
-    private val weatherRepository: WeatherRepository
-        get() = ServiceLocator.provideWeatherRepository()
-
-    val getWeatherUseCase: GetWeatherUseCase
-        get() = GetWeatherUseCase(weatherRepository)
-
-    val getDailyForecastsUseCase: GetDailyForecastsUseCase
-        get() = GetDailyForecastsUseCase(weatherRepository)
+    override fun onCreate() {
+        super.onCreate()
+        // Start Koin
+        startKoin {
+            androidLogger()
+            androidContext(this@WeatherApplication)
+            modules(appModule, viewModelsModule)
+        }
+    }
 }

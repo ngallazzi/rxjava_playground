@@ -1,5 +1,6 @@
 package com.ngallazzi.rxjavaplayground.data.api
 
+import com.ngallazzi.rxjavaplayground.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -36,13 +37,7 @@ class NetworkModule {
             .build()
     }
 
-    fun createWeatherApiRx(endpointURL: String): WeatherApiRx {
-        val retrofit = getRetrofit(endpointURL)
-        return retrofit.create(WeatherApiRx::class.java)
-    }
-
-    fun createWeatherApiCoroutines(endpointURL: String): WeatherApiCoroutines {
-        val retrofit = getRetrofit(endpointURL)
-        return retrofit.create(WeatherApiCoroutines::class.java)
+    fun createWeatherApiRx(): WeatherApiRx {
+        return getRetrofit(BuildConfig.API_URL).create(WeatherApiRx::class.java)
     }
 }
