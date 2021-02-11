@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation project(':data')
+    implementation project(':domain')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
@@ -65,16 +67,6 @@ dependencies {
     // Desugaring
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugaring_version"
 
-    // Networking
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_moshi_converter_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava3:$rx_java_retrofit_adapter_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-
-    implementation "com.squareup.okhttp3:okhttp-bom:$okhttp_version"
-    implementation("com.squareup.okhttp3:logging-interceptor")
-    implementation("com.squareup.okhttp3:okhttp")
-
     // Image caching and loading
     implementation("io.coil-kt:coil:$coil_version")
 
@@ -83,11 +75,22 @@ dependencies {
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
 
+
+    testImplementation "junit:junit:$junit_version"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_moshi_converter_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$rx_java_retrofit_adapter_version"
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:$okhttp_version"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
     // Dependency injection with koin
-    // Koin for Android
-    implementation "org.koin:koin-android:$koin_version"
-    // Koin Android Scope features
-    implementation "org.koin:koin-android-scope:$koin_version"
+    // Koin for Kotlin apps
+    implementation "org.koin:koin-core:$koin_version"
+
     // Koin Android ViewModel features
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     // Koin Android Experimental features
@@ -99,8 +102,4 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
-
-    implementation "io.reactivex.rxjava3:rxjava:$rx_java_version"
-    implementation "io.reactivex.rxjava3:rxkotlin:$rx_kotlin_version"
-
 }

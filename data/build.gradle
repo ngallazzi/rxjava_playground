@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Retrofit interface
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // Moshi for json serialization / deserialization
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+}

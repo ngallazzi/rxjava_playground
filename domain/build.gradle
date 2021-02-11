@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testImplementation "junit:junit:$junit_version"
+    // Moshi for json serialization / deserialization
+    api "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
+    api "io.reactivex.rxjava3:rxjava:$rx_java_version"
+    api "io.reactivex.rxjava3:rxkotlin:$rx_kotlin_version"
+}

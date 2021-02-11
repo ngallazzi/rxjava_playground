@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.load
-import com.ngallazzi.rxjavaplayground.data.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.databinding.FragmentForecastBinding
+import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.ui.adapters.forecast
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -49,8 +49,8 @@ class ForecastFragment : Fragment() {
                     forecast {
                         id(it.hashCode())
                         date(it.date)
-                        minTemp(it.temperature.min)
-                        maxTemp(it.temperature.max)
+                        minTemp(it.temperatures.min)
+                        maxTemp(it.temperatures.max)
                         iconUrl(it.weather.iconUrl)
                     }
                 }
