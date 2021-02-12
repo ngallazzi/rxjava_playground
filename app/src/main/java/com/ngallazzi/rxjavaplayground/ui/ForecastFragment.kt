@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import coil.load
 import com.ngallazzi.rxjavaplayground.databinding.FragmentForecastBinding
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
-import com.ngallazzi.rxjavaplayground.ui.adapters.forecast
+import com.ngallazzi.rxjavaplayground.ui.adapters.forecastItemView
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ForecastFragment : Fragment() {
@@ -46,12 +46,12 @@ class ForecastFragment : Fragment() {
 
             binding.ervNextDaysForecasts.withModels {
                 forecasts.forEach {
-                    forecast {
+                    forecastItemView {
                         id(it.hashCode())
                         date(it.date)
                         minTemp(it.temperatures.min)
                         maxTemp(it.temperatures.max)
-                        iconUrl(it.weather.iconUrl)
+                        icon(it.weather.iconUrl)
                     }
                 }
             }
