@@ -10,6 +10,7 @@ import coil.load
 import com.ngallazzi.rxjavaplayground.databinding.FragmentForecastBinding
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.ui.adapters.forecastItemView
+import com.ngallazzi.rxjavaplayground.ui.rxjava.ForecastViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ForecastFragment : Fragment() {

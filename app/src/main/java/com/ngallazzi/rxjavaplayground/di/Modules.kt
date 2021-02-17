@@ -3,13 +3,15 @@ package com.ngallazzi.rxjavaplayground.di
 import com.ngallazzi.rxjavaplayground.BuildConfig
 import com.ngallazzi.rxjavaplayground.Utils
 import com.ngallazzi.rxjavaplayground.mappers.ForecastsMapper
-import com.ngallazzi.rxjavaplayground.ui.ForecastViewModel
-import com.ngallazzi.weather.data.WeatherRepositoryImpl
-import com.ngallazzi.weather.data.api.WeatherRemoteDataSourceRx
-import com.ngallazzi.weather.data.persistence.WeatherLocalDataSource
-import com.ngallazzi.weather.domain.repositories.WeatherRepository
-import com.ngallazzi.weather.domain.usecases.GetDailyForecastsUseCase
-import com.ngallazzi.weather.domain.usecases.GetWeatherUseCase
+import com.ngallazzi.rxjavaplayground.ui.rxjava.ForecastViewModel
+import com.ngallazzi.weather.data.rxjava.repositories.WeatherRepositoryImpl
+import com.ngallazzi.weather.data.rxjava.remote.WeatherRemoteDataSource
+import com.ngallazzi.weather.data.rxjava.persistence.WeatherLocalDataSource
+import com.ngallazzi.weather.domain.repositories.rxjava.WeatherRepository
+import com.ngallazzi.weather.domain.usecases.rxjava.GetWeekWeatherUseCase
+import com.ngallazzi.weather.domain.usecases.rxjava.GetWeatherUseCase
+import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeatherUseCase
+import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeekWeatherUseCase
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,18 +22,20 @@ val appModule = module {
 
 val viewModelsModule = module {
     factory { WeatherLocalDataSource() }
-    factory { WeatherRemoteDataSourceRx(get(), BuildConfig.API_KEY) }
+    factory { WeatherRemoteDataSource(get(), BuildConfig.API_KEY) }
     single<WeatherRepository> {
         WeatherRepositoryImpl(
             get(), get()
         )
     }
     factory { GetWeatherUseCase(get()) }
-    factory { GetDailyForecastsUseCase(get()) }
+    factory { GetWeekWeatherUseCase(get()) }
+    factory { SaveWeatherUseCase(get()) }
+    factory { SaveWeekWeatherUseCase(get()) }
     factory { Utils() }
     factory { ForecastsMapper(get()) }
 
     viewModel {
-        ForecastViewModel(get(), get(), get())
+        ForecastViewModel(get(), get(), get(), get(), get())
     }
 }

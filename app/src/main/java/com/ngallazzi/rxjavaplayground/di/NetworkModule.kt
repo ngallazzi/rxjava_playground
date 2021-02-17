@@ -1,6 +1,6 @@
 package com.ngallazzi.rxjavaplayground.di
 
-import com.ngallazzi.weather.data.api.WeatherApiRx
+import com.ngallazzi.weather.data.rxjava.api.WeatherApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -37,7 +37,7 @@ class NetworkModule {
             .build()
     }
 
-    fun createWeatherApiRx(baseApiUrl: String): WeatherApiRx {
-        return getRetrofit(baseApiUrl).create(WeatherApiRx::class.java)
+    fun createWeatherApiRx(baseApiUrl: String): WeatherApi {
+        return getRetrofit(baseApiUrl).create(WeatherApi::class.java)
     }
 }

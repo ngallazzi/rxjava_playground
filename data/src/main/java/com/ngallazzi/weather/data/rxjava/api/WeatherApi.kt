@@ -1,19 +1,20 @@
-package com.ngallazzi.weather.data.api
+package com.ngallazzi.weather.data.rxjava.api
 
 import com.ngallazzi.weather.domain.entities.CurrentWeather
 import com.ngallazzi.weather.domain.entities.WeekWeather
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-interface WeatherApiRx {
+interface WeatherApi {
     @GET("weather")
     fun getCityWeather(
         @Query("q") city: String,
         @Query("appid") appid: String,
         @Query("units") units: String = "metric"
-    ): Single<CurrentWeather>
+    ): Maybe<CurrentWeather>
 
     @GET("onecall")
     fun getWeekWeatherByCoordinates(
@@ -22,5 +23,5 @@ interface WeatherApiRx {
         @Query("exclude") exclude: String = "minutely,hourly,alerts,current",
         @Query("appid") appid: String,
         @Query("units") units: String = "metric"
-    ): Single<WeekWeather>
+    ): Maybe<WeekWeather>
 }

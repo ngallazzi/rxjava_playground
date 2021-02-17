@@ -4,8 +4,8 @@ import com.squareup.moshi.Json
 
 data class CurrentWeather(
     @Json(name = "coord") val coordinates: Coordinates,
-    @Json(name = "weather") val weather: List<Weather>,
-    @Json(name = "main") val weatherInfo: WeatherInfo,
+    @Json(name = "weather") var weather: List<Weather>,
+    @Json(name = "main") var weatherInfo: WeatherInfo,
     @Json(name = "id") val cityId: Int,
     @Json(name = "name") val cityName: String
 ) {
