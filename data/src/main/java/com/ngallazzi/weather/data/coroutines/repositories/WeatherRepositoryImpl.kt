@@ -18,7 +18,7 @@ class WeatherRepositoryImpl(
             true -> {
                 val result = remoteDataSource.getCityWeather(city)
                 if (result is Result.Success) {
-                    localDataSource.saveCityWeather(city, result.data)
+                    localDataSource.saveCityWeather(result.data)
                 }
                 result
             }

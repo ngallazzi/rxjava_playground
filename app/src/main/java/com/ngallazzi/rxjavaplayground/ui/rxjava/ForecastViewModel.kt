@@ -1,5 +1,6 @@
 package com.ngallazzi.rxjavaplayground.ui.rxjava
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,11 +8,14 @@ import com.ngallazzi.rxjavaplayground.BuildConfig
 import com.ngallazzi.rxjavaplayground.entities.CityForecast
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.mappers.ForecastsMapper
+import com.ngallazzi.weather.domain.entities.CurrentWeather
+import com.ngallazzi.weather.domain.entities.WeekWeather
 import com.ngallazzi.weather.domain.usecases.rxjava.GetWeekWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.GetWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeekWeatherUseCase
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 
 class ForecastViewModel(
@@ -33,20 +37,21 @@ class ForecastViewModel(
     val error: LiveData<String> = _error
 
     fun getWeather(
-        city: String = "Castellanza",
-        forceUpdate: Boolean = false
+        city: String = "Castellanza"
     ) {
         _dataLoading.postValue(true)
-        val weatherObservable = getWeatherUseCase.invoke(city, forceUpdate)
+        val weatherObservable = getWeatherUseCase.invoke(city)
         val dailyForecastsObservable = weatherObservable.flatMap { weather ->
-            getWeekWeatherUseCase.invoke(weather.coordinates, forceUpdate)
+            getWeekWeatherUseCase.invoke(weather.coordinates)
         }
-
-        val disposable = Maybe.zip(weatherObservable, dailyForecastsObservable,
+        weatherObservable.subscribe { success -> Log.v("Test", success.cityName) }
+        val disposable = Single.zip(
+            weatherObservable,
+            dailyForecastsObservable,
             { weather, dailyForecast -> Pair(weather, dailyForecast) })
             .subscribe(
                 { success ->
-                    saveWeatherUseCase.invoke(city, success.first)
+                    saveWeatherUseCase.invoke(success.first)
                     saveWeekWeatherUseCase.invoke(success.first.coordinates, success.second)
 
                     val cityForecast = mapper.fromCurrentWeatherToCityForecast(

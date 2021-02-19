@@ -14,14 +14,14 @@ interface WeatherApi {
         @Query("q") city: String,
         @Query("appid") appid: String,
         @Query("units") units: String = "metric"
-    ): Maybe<CurrentWeather>
+    ): Single<CurrentWeather>
 
     @GET("onecall")
     fun getWeekWeatherByCoordinates(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("exclude") exclude: String = "minutely,hourly,alerts,current",
+        @Query("exclude") exclude: String = "minutely,alerts,current",
         @Query("appid") appid: String,
         @Query("units") units: String = "metric"
-    ): Maybe<WeekWeather>
+    ): Single<WeekWeather>
 }

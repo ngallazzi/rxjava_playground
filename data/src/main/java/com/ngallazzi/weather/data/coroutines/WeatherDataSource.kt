@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Single
 interface WeatherDataSource {
     suspend fun getCityWeather(cityName: String): Result<CurrentWeather>
 
-    fun saveCityWeather(cityName: String, currentWeather: CurrentWeather)
+    fun saveCityWeather(currentWeather: CurrentWeather)
 
     suspend fun getWeekWeather(coordinates: CurrentWeather.Coordinates): Result<WeekWeather>
 

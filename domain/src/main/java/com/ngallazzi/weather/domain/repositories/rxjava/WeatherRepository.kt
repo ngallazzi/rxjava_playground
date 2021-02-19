@@ -6,14 +6,14 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 interface WeatherRepository {
-    fun getCurrentWeather(city: String, forceUpdate: Boolean = false): Maybe<CurrentWeather>
+
+    fun getCurrentWeather(city: String): Single<CurrentWeather>
 
     fun getWeekWeather(
-        coordinates: CurrentWeather.Coordinates,
-        forceUpdate: Boolean = false
-    ): Maybe<WeekWeather>
+        coordinates: CurrentWeather.Coordinates
+    ): Single<WeekWeather>
 
-    fun saveCityWeather(city: String, weather: CurrentWeather)
+    fun saveCityWeather(weather: CurrentWeather)
 
     fun saveWeekWeather(coordinates: CurrentWeather.Coordinates, weekWeather: WeekWeather)
 }

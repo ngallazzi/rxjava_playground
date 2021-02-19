@@ -20,7 +20,7 @@ class WeatherRemoteDataSource(
         }
     }
 
-    override fun saveCityWeather(cityName: String, currentWeather: CurrentWeather) {
+    override fun saveCityWeather(currentWeather: CurrentWeather) {
         //no op
         TODO("Not yet implemented")
     }

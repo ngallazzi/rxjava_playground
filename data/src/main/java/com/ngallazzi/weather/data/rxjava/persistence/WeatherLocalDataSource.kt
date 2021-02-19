@@ -1,43 +1,42 @@
 package com.ngallazzi.weather.data.rxjava.persistence
 
-import com.ngallazzi.weather.data.rxjava.WeatherDataSource
 import com.ngallazzi.weather.domain.entities.CurrentWeather
 import com.ngallazzi.weather.domain.entities.WeekWeather
-import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 
-class WeatherLocalDataSource : WeatherDataSource {
+class WeatherLocalDataSource {
     // in memory persistence for simplicity
-    private val citiesCurrentWeathers: ArrayList<Pair<String, CurrentWeather>> = arrayListOf()
+    private val citiesCurrentWeathers: ArrayList<CurrentWeather> = arrayListOf()
     private val citiesWeekWeathers: ArrayList<Pair<CurrentWeather.Coordinates, WeekWeather>> =
         arrayListOf()
 
-    override fun getCityWeather(cityName: String): Maybe<CurrentWeather> {
-        citiesCurrentWeathers.find { it.first == cityName }?.let {
-            return Maybe.just(it.second)
+    fun getCityWeather(cityName: String): CurrentWeather? {
+        citiesCurrentWeathers.find { it.cityName == cityName }?.let { weather ->
+            return weather
         } ?: kotlin.run {
-            return Maybe.empty()
+            return null
         }
     }
 
-    override fun saveCityWeather(cityName: String, currentWeather: CurrentWeather) {
-        citiesCurrentWeathers.find { it.first == cityName }?.let {
-            it.second.weatherInfo = currentWeather.weatherInfo
-            it.second.weather = currentWeather.weather
+    fun saveCityWeather(currentWeather: CurrentWeather) {
+        citiesCurrentWeathers.find { it.cityName == currentWeather.cityName }?.let { weather ->
+            weather.weatherInfo = currentWeather.weatherInfo
+            weather.weather = currentWeather.weather
         } ?: kotlin.run {
-            citiesCurrentWeathers.add(Pair(cityName, currentWeather))
+            citiesCurrentWeathers.add(currentWeather)
         }
     }
 
-    override fun getWeekWeather(coordinates: CurrentWeather.Coordinates): Maybe<WeekWeather> {
+    fun getWeekWeather(coordinates: CurrentWeather.Coordinates): WeekWeather? {
         citiesWeekWeathers.find { it.first.lat == coordinates.lat && it.first.lon == coordinates.lon }
             ?.let {
-                return Maybe.just(it.second)
+                return it.second
             } ?: kotlin.run {
-            return Maybe.empty()
+            return null
         }
     }
 
-    override fun saveWeekWeather(coordinates: CurrentWeather.Coordinates, weather: WeekWeather) {
+    fun saveWeekWeather(coordinates: CurrentWeather.Coordinates, weather: WeekWeather) {
         citiesWeekWeathers.find { it.first.lat == coordinates.lat && it.first.lon == coordinates.lon }
             ?.let {
                 it.second.dayForecasts = weather.dayForecasts

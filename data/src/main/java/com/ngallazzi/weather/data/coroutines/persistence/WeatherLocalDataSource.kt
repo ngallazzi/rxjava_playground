@@ -7,24 +7,24 @@ import com.ngallazzi.weather.domain.entities.WeekWeather
 
 class WeatherLocalDataSource : WeatherDataSource {
     // in memory persistence for simplicity
-    private val citiesCurrentWeathers: ArrayList<Pair<String, CurrentWeather>> = arrayListOf()
+    private val citiesCurrentWeathers: ArrayList<CurrentWeather> = arrayListOf()
     private val citiesWeekWeathers: ArrayList<Pair<CurrentWeather.Coordinates, WeekWeather>> =
         arrayListOf()
 
     override suspend fun getCityWeather(cityName: String): Result<CurrentWeather> {
-        citiesCurrentWeathers.find { it.first == cityName }?.let {
-            return Result.Success(it.second)
+        citiesCurrentWeathers.find { it.cityName == cityName }?.let { weather ->
+            return Result.Success(weather)
         } ?: kotlin.run {
             return Result.Error(Exception("city weather cache not found"))
         }
     }
 
-    override fun saveCityWeather(cityName: String, currentWeather: CurrentWeather) {
-        citiesCurrentWeathers.find { it.first == cityName }?.let {
-            it.second.weatherInfo = currentWeather.weatherInfo
-            it.second.weather = currentWeather.weather
+    override fun saveCityWeather(currentWeather: CurrentWeather) {
+        citiesCurrentWeathers.find { it.cityName == currentWeather.cityName }?.let { weather ->
+            weather.weatherInfo = currentWeather.weatherInfo
+            weather.weather = currentWeather.weather
         } ?: kotlin.run {
-            citiesCurrentWeathers.add(Pair(cityName, currentWeather))
+            citiesCurrentWeathers.add(currentWeather)
         }
     }
 

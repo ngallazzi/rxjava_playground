@@ -6,31 +6,31 @@ import com.ngallazzi.weather.domain.entities.CurrentWeather
 import com.ngallazzi.weather.domain.entities.WeekWeather
 import com.ngallazzi.weather.domain.repositories.rxjava.WeatherRepository
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Single
 
 class WeatherRepositoryImpl(
     private val remoteDataSource: WeatherRemoteDataSource,
     private val localDataSource: WeatherLocalDataSource
 ) :
     WeatherRepository {
-    override fun getCurrentWeather(city: String, forceUpdate: Boolean): Maybe<CurrentWeather> {
-        return when (forceUpdate) {
-            true -> remoteDataSource.getCityWeather(city)
-            false -> localDataSource.getCityWeather(city)
+    override fun getCurrentWeather(city: String): Single<CurrentWeather> {
+        localDataSource.getCityWeather(city)?.let { weather ->
+            return Single.just(weather)
+        } ?: run {
+            return remoteDataSource.getCityWeather(city)
         }
     }
 
-    override fun getWeekWeather(
-        coordinates: CurrentWeather.Coordinates,
-        forceUpdate: Boolean
-    ): Maybe<WeekWeather> {
-        return when (forceUpdate) {
-            true -> remoteDataSource.getWeekWeather(coordinates)
-            false -> localDataSource.getWeekWeather(coordinates)
+    override fun getWeekWeather(coordinates: CurrentWeather.Coordinates): Single<WeekWeather> {
+        localDataSource.getWeekWeather(coordinates)?.let { weather ->
+            return Single.just(weather)
+        } ?: run {
+            return remoteDataSource.getWeekWeather(coordinates)
         }
     }
 
-    override fun saveCityWeather(city: String, weather: CurrentWeather) {
-        localDataSource.saveCityWeather(city, weather)
+    override fun saveCityWeather(weather: CurrentWeather) {
+        localDataSource.saveCityWeather(weather)
     }
 
     override fun saveWeekWeather(
