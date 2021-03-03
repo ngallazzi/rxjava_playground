@@ -62,8 +62,9 @@ class ForecastFragment : Fragment() {
 
             binding.clCurrentWeather.setOnClickListener {
                 val bundle = bundleOf(
-                    Pair(getString(R.string.longitude_bundle_id), info.first.coordinates.lat),
-                    Pair(getString(R.string.longitude_bundle_id), info.first.coordinates.lon)
+                    Pair(getString(R.string.city_name_id), info.first.cityName),
+                    Pair(getString(R.string.latitude_bundle_id), info.first.coordinates.lat),
+                    Pair(getString(R.string.longitude_bundle_id), info.first.coordinates.lon),
                 )
                 findNavController().navigate(
                     R.id.action_forecastFragment_to_dayForecastFragment,

@@ -1,6 +1,7 @@
 package com.ngallazzi.rxjavaplayground
 
-import com.ngallazzi.weather.domain.entities.CurrentWeather
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 
 class Utils {
@@ -12,5 +13,7 @@ class Utils {
         return "${temp.toInt()} °C"
     }
 
-
+    fun getLocalDateTimeFromTimeStamp(timestamp: Long): LocalDateTime {
+        return LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC)
+    }
 }

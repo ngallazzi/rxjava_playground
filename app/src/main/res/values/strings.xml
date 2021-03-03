@@ -8,4 +8,5 @@
     <!-- Bundle ids -->
     <string name="latitude_bundle_id">latitude</string>
     <string name="longitude_bundle_id">longitude</string>
+    <string name="city_name_id">city_name_id</string>
 </resources>

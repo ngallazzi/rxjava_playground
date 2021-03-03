@@ -6,8 +6,6 @@ import com.ngallazzi.rxjavaplayground.entities.CityForecast
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.weather.domain.entities.CurrentWeather
 import com.ngallazzi.weather.domain.entities.WeekWeather
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class ForecastsMapper(private val utils: Utils) {
     fun fromCurrentWeatherToCityForecast(
@@ -31,13 +29,13 @@ class ForecastsMapper(private val utils: Utils) {
     ): List<DailyForecast> {
         val dailyForecastsList = arrayListOf<DailyForecast>()
         for (forecast in response.dayForecasts) {
-            val date = LocalDateTime.ofEpochSecond(forecast.date, 0, ZoneOffset.UTC)
+
             val weather = forecast.weather.first()
             val weatherWithIconUrl = DailyForecast.Weather(
                 weather.id,
                 utils.fromIconIdToImageUrl(weather.icon, baseImageUrl)
             )
-
+            val date = utils.getLocalDateTimeFromTimeStamp(forecast.date)
             val dailyForecast = DailyForecast(
                 date,
                 DailyForecast.Temperatures(

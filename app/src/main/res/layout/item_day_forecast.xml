@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp"
     android:paddingTop="8dp"
+    android:paddingEnd="16dp"
     android:paddingBottom="8dp">
 
     <ImageView
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        tools:text="10:00" />
 
     <TextView
         android:id="@+id/tvTemp"
@@ -43,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivWeather"
         app:layout_constraintTop_toTopOf="@+id/ivWeather"
-        tools:text="@tools:sample/lorem" />
+        tools:text="10°" />
 
     <TextView
         android:id="@+id/tvWeather"
@@ -55,5 +55,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvTemp"
         app:layout_constraintTop_toTopOf="@+id/tvTemp"
-        tools:text="@tools:sample/lorem" />
+        tools:text="Clouds" />
 </androidx.constraintlayout.widget.ConstraintLayout>
