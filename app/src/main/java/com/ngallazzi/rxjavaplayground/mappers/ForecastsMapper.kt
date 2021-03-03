@@ -19,6 +19,7 @@ class ForecastsMapper(private val utils: Utils) {
             response.cityName,
             utils.getFormattedTemperature(response.weatherInfo.minTemp),
             utils.getFormattedTemperature(response.weatherInfo.maxTemp),
+            response.coordinates,
             response.weather.first().description,
             utils.fromIconIdToImageUrl(response.weather.first().icon, baseImageUrl)
         )

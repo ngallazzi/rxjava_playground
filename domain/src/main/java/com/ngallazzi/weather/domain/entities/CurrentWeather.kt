@@ -2,6 +2,7 @@ package com.ngallazzi.weather.domain.entities
 
 import com.squareup.moshi.Json
 
+
 data class CurrentWeather(
     @Json(name = "coord") val coordinates: Coordinates,
     @Json(name = "weather") var weather: List<Weather>,
@@ -9,6 +10,7 @@ data class CurrentWeather(
     @Json(name = "id") val cityId: Int,
     @Json(name = "name") val cityName: String
 ) {
+
     class Coordinates(val lon: Double, val lat: Double)
 
     class Weather(

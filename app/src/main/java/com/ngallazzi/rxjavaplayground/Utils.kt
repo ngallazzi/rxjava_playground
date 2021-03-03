@@ -1,5 +1,7 @@
 package com.ngallazzi.rxjavaplayground
 
+import com.ngallazzi.weather.domain.entities.CurrentWeather
+
 
 class Utils {
     fun fromIconIdToImageUrl(iconId: String, baseImageUrl: String): String {
@@ -9,4 +11,6 @@ class Utils {
     fun getFormattedTemperature(temp: Double): String {
         return "${temp.toInt()} °C"
     }
+
+
 }

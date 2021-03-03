@@ -1,6 +1,5 @@
 package com.ngallazzi.rxjavaplayground.ui.rxjava
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,13 +7,10 @@ import com.ngallazzi.rxjavaplayground.BuildConfig
 import com.ngallazzi.rxjavaplayground.entities.CityForecast
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.mappers.ForecastsMapper
-import com.ngallazzi.weather.domain.entities.CurrentWeather
-import com.ngallazzi.weather.domain.entities.WeekWeather
-import com.ngallazzi.weather.domain.usecases.rxjava.GetWeekWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.GetWeatherUseCase
+import com.ngallazzi.weather.domain.usecases.rxjava.GetWeekWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeatherUseCase
 import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeekWeatherUseCase
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 
@@ -44,7 +40,7 @@ class ForecastViewModel(
         val dailyForecastsObservable = weatherObservable.flatMap { weather ->
             getWeekWeatherUseCase.invoke(weather.coordinates)
         }
-        weatherObservable.subscribe { success -> Log.v("Test", success.cityName) }
+
         val disposable = Single.zip(
             weatherObservable,
             dailyForecastsObservable,

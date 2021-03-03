@@ -9,5 +9,14 @@
         android:id="@+id/forecastFragment"
         android:name="com.ngallazzi.rxjavaplayground.ui.ForecastFragment"
         android:label="fragment_forecast"
-        tools:layout="@layout/fragment_forecast" />
+        tools:layout="@layout/fragment_forecast">
+        <action
+            android:id="@+id/action_forecastFragment_to_dayForecastFragment"
+            app:destination="@id/dayForecastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dayForecastFragment"
+        android:name="com.ngallazzi.rxjavaplayground.ui.DayForecastFragment"
+        android:label="DayForecastFragment"
+        tools:layout="@layout/fragment_day_forecast" />
 </navigation>

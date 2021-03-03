@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Weather app</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="temperature_placeholder">%1$d C°</string>
+    <!-- Errors -->
+    <string name="generic_error">An error occurred: %1$s, please retry</string>
+    <string name="network_error">An error occurred during network call: %1$s, please retry</string>
+    <string name="no_coordinates_arguments_error">No arguments provided, please contact support</string>
+    <!-- Bundle ids -->
+    <string name="latitude_bundle_id">latitude</string>
+    <string name="longitude_bundle_id">longitude</string>
 </resources>

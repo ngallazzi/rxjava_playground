@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import coil.load
+import com.ngallazzi.rxjavaplayground.R
 import com.ngallazzi.rxjavaplayground.databinding.FragmentForecastBinding
 import com.ngallazzi.rxjavaplayground.entities.DailyForecast
 import com.ngallazzi.rxjavaplayground.ui.adapters.forecastItemView
@@ -55,6 +58,17 @@ class ForecastFragment : Fragment() {
                         icon(it.weather.iconUrl)
                     }
                 }
+            }
+
+            binding.clCurrentWeather.setOnClickListener {
+                val bundle = bundleOf(
+                    Pair(getString(R.string.longitude_bundle_id), info.first.coordinates.lat),
+                    Pair(getString(R.string.longitude_bundle_id), info.first.coordinates.lon)
+                )
+                findNavController().navigate(
+                    R.id.action_forecastFragment_to_dayForecastFragment,
+                    bundle
+                )
             }
 
         })

@@ -8,10 +8,7 @@ import com.ngallazzi.weather.data.rxjava.repositories.WeatherRepositoryImpl
 import com.ngallazzi.weather.data.rxjava.remote.WeatherRemoteDataSource
 import com.ngallazzi.weather.data.rxjava.persistence.WeatherLocalDataSource
 import com.ngallazzi.weather.domain.repositories.rxjava.WeatherRepository
-import com.ngallazzi.weather.domain.usecases.rxjava.GetWeekWeatherUseCase
-import com.ngallazzi.weather.domain.usecases.rxjava.GetWeatherUseCase
-import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeatherUseCase
-import com.ngallazzi.weather.domain.usecases.rxjava.SaveWeekWeatherUseCase
+import com.ngallazzi.weather.domain.usecases.rxjava.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -32,6 +29,7 @@ val viewModelsModule = module {
     factory { GetWeekWeatherUseCase(get()) }
     factory { SaveWeatherUseCase(get()) }
     factory { SaveWeekWeatherUseCase(get()) }
+    factory { GetDayWeatherUseCase(get()) }
     factory { Utils() }
     factory { ForecastsMapper(get()) }
 
